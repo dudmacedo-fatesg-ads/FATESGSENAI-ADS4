@@ -1,0 +1,8 @@
+<Config>
+  <DIR__ENTRADA>/home/banco/entrada</DIR__ENTRADA>
+  <DIR__PENDENTE>/home/banco/pendente</DIR__PENDENTE>
+  <DIR__PROCESSADOS>/home/banco/processados</DIR__PROCESSADOS>
+  <AMBIENTE>DSN2</AMBIENTE>
+  <SISTEMA>MTA</SISTEMA>
+  <TIMEOUT>30</TIMEOUT>
+</Config>
