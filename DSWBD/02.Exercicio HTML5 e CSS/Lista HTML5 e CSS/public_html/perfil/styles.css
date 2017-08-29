@@ -1,0 +1,52 @@
+div.container {
+    width: 100%;
+    border: 1px solid gray;
+}
+
+header, footer {
+    padding: 1em;
+    color: white;
+    background-color: crimson;
+    clear: left;
+    text-align: center;
+}
+
+nav {
+    float: left;
+    max-width: 160px;
+    margin: 1em;
+}
+
+.profileimg {
+    width: 130px;
+    height: 130px;
+    background: url('img/profile.jpg');
+    background-position: center;
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    border-radius: 50%;
+}
+
+.nome {
+    font-family: sans-serif;
+    font-size: 12pt;
+    font-weight: bold;
+    font-style: italic;
+}
+.proptitle {
+    font-family: sans-serif;
+    font-size: 12pt;
+}
+.prop {
+    font-family: sans-serif;
+    font-size: 11pt;
+}
+
+article {
+    font-family: sans-serif;
+    margin-left: 170px;
+    border-left: 1px solid gray;
+    height: 100%;
+    padding: 1em;
+    overflow: hidden;
+}

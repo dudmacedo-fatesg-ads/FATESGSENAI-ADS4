@@ -1,0 +1,50 @@
+<html>
+    <head>
+        <title>Eduardo Macedo Santos - Formulário 2</title>
+        <meta charset="utf-8">
+    </head>
+    <body>
+        <!-- Exercício 12 -->
+		<h3>Formulário 2</h3>
+        <form>
+            <fieldset>
+                <legend>Dados Pessoais</legend>
+                Nome:
+				<input type="text" name="nome"/><br>
+                Endereço:
+				<input type="text" name="endereco"/><br>
+                Cidade:
+				<input type="text" name="cidade"/><br>
+                Estado:
+				<select name="estado">
+                    <option value="SP">São Paulo</option>
+                    <option value="GO">Goiás</option>
+                    <option value="MG">Minas Gerais</option>
+                    <option value="DF">Distrito Federal</option>
+                </select>
+            </fieldset>
+            <br>
+            <fieldset>
+                <legend>Dados Profissionais</legend>
+                Natureza do Cargo:<br>
+                <input type="radio" name="natureza" value="gerencia" checked>Gerência
+                <input type="radio" name="natureza" value="financeiro">Financeiro
+                <input type="radio" name="natureza" value="recepcao">Recepção
+                <input type="radio" name="natureza" value="administrativo">Administrativo
+                <input type="radio" name="natureza" value="juridico">Jurídico
+                <br><br>
+                Área de Interesse:<br>
+                <input type="checkbox" name="computacao">Computação
+                <input type="checkbox" name="biologia">Biologia
+                <input type="checkbox" name="meioambiente">Meio Ambiente
+                <input type="checkbox" name="engenharia">Engenharia
+                <input type="checkbox" name="historia">História
+                <br><br>
+                Mini-currículo: <textarea rows="5" cols="40" name="curriculo"></textarea>
+            </fieldset>
+            <br>
+            <input type="submit" value="Enviar"/>
+            <input type="reset" value="Limpar"/>
+        </form>
+    </body>
+</html>
