@@ -6,7 +6,7 @@ import java.util.Date;
  *
  * @author eduardo
  */
-public class EUser {
+public class Eduardo {
 
     private long eduardocpf;
     private Date eduardodatacadastro;

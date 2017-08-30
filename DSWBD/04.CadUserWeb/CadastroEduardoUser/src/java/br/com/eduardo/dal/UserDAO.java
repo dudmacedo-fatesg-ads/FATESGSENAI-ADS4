@@ -1,18 +1,20 @@
 package br.com.eduardo.dal;
 
 import br.com.eduardo.error.DatabaseException;
-import br.com.eduardo.model.EUser;
+import br.com.eduardo.model.Eduardo;
 import br.com.eduardo.util.DBFactory;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
 
 /**
  *
  * @author eduardo
  */
-public class UserDAO implements EntityDAO<EUser> {
+public class UserDAO implements EntityDAO<Eduardo> {
 
     private Connection cnx;
 
@@ -26,7 +28,7 @@ public class UserDAO implements EntityDAO<EUser> {
     }
 
     @Override
-    public void create(EUser obj) throws DatabaseException {
+    public void create(Eduardo obj) throws DatabaseException {
         String sql = String.format(
                 "INSERT INTO %s "
                 + "(eduardocpf, eduardodatacadastro, eduardonome, eduardoendereco) "
@@ -45,17 +47,48 @@ public class UserDAO implements EntityDAO<EUser> {
     }
 
     @Override
-    public EUser retrieve(EUser obj) throws DatabaseException {
+    public Eduardo retrieve(Object key) throws DatabaseException {
+        String sql = String.format("SELECT * FROM %s WHERE eduardocpf = ?", getTabela());
+        
+        try (PreparedStatement pstmt = cnx.prepareStatement(sql)) {
+            pstmt.setLong(1, (long) key);
+            
+            ResultSet rs = pstmt.executeQuery();
+            
+            if (rs.next()) {
+                Eduardo ret = new Eduardo();
+                
+                ret.setEduardocpf(rs.getLong("eduardocpf"));
+                ret.setEduardodatacadastro(rs.getDate("eduardodatacadastro"));
+                ret.setEduardonome(rs.getString("eduardonome"));
+                ret.setEduardoendereco(rs.getString("eduardoendereco"));
+                
+                return ret;
+            }
+            else {
+                throw new DatabaseException(null, "Não existe nenhum registro com a chave informada");
+            }
+        } catch (SQLException ex) {
+            throw new DatabaseException(ex, "Erro ao consultar registro");
+        }
+    }
+
+    @Override
+    public void update(Eduardo obj) throws DatabaseException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public void update(EUser obj) throws DatabaseException {
+    public void delete(Eduardo obj) throws DatabaseException {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+    
+    public void deleteByID(long cpf) throws DatabaseException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public void delete(EUser obj) throws DatabaseException {
+    public List<Eduardo> getAll() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }
