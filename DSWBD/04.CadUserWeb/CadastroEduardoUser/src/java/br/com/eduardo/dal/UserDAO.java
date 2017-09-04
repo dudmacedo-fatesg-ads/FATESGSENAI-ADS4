@@ -49,23 +49,22 @@ public class UserDAO implements EntityDAO<Eduardo> {
     @Override
     public Eduardo retrieve(Object key) throws DatabaseException {
         String sql = String.format("SELECT * FROM %s WHERE eduardocpf = ?", getTabela());
-        
+
         try (PreparedStatement pstmt = cnx.prepareStatement(sql)) {
             pstmt.setLong(1, (long) key);
-            
+
             ResultSet rs = pstmt.executeQuery();
-            
+
             if (rs.next()) {
                 Eduardo ret = new Eduardo();
-                
+
                 ret.setEduardocpf(rs.getLong("eduardocpf"));
                 ret.setEduardodatacadastro(rs.getDate("eduardodatacadastro"));
                 ret.setEduardonome(rs.getString("eduardonome"));
                 ret.setEduardoendereco(rs.getString("eduardoendereco"));
-                
+
                 return ret;
-            }
-            else {
+            } else {
                 throw new DatabaseException(null, "Não existe nenhum registro com a chave informada");
             }
         } catch (SQLException ex) {
@@ -82,7 +81,7 @@ public class UserDAO implements EntityDAO<Eduardo> {
     public void delete(Eduardo obj) throws DatabaseException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-    
+
     public void deleteByID(long cpf) throws DatabaseException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
