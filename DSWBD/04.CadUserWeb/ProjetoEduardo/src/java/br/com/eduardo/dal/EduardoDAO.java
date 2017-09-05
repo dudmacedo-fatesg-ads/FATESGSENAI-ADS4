@@ -8,6 +8,7 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -121,11 +122,33 @@ public class EduardoDAO implements EntityDAO<Eduardo> {
         }
     }
 
-//    public void deleteByID(long cpf) throws DatabaseException {
-//        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-//    }
     @Override
-    public List<Eduardo> getAll() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public List<Eduardo> getAll() throws DatabaseException {
+        String sql = "SELECT * FROM %s";
+        List<Eduardo> lista = new ArrayList<>();
+
+        try (PreparedStatement pstmt = cnx.prepareStatement(sql)) {
+            ResultSet rs = pstmt.executeQuery();
+
+            while (rs.next()) {
+                Eduardo ret = new Eduardo();
+
+                ret.setEduardocpf(rs.getLong("eduardocpf"));
+                ret.setEduardodatacadastro(rs.getDate("eduardodatacadastro"));
+                ret.setEduardonome(rs.getString("eduardonome"));
+                ret.setEduardoendereco(rs.getString("eduardoendereco"));
+                ret.setEduardoemail(rs.getString("eduardoemail"));
+                ret.setEduardocelular(rs.getString("eduardocelular"));
+                ret.setEduardosexo(rs.getString("eduardosexo").charAt(0));
+                ret.setEduardostatus(rs.getBoolean("eduardostatus"));
+
+                lista.add(ret);
+            }
+
+        } catch (SQLException ex) {
+            throw new DatabaseException(ex, "Erro ao consultar registros");
+        }
+        
+        return lista;
     }
 }
