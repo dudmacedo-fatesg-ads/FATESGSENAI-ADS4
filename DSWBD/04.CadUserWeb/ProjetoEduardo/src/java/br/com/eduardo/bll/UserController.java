@@ -1,12 +1,9 @@
 package br.com.eduardo.bll;
 
-import br.com.eduardo.dal.UserDAO;
-import br.com.eduardo.error.DatabaseException;
+import br.com.eduardo.dal.EduardoDAO;
+import br.com.eduardo.util.DatabaseException;
 import br.com.eduardo.model.Eduardo;
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -23,11 +20,11 @@ public class UserController extends HttpServlet {
 
     private static final String INSERT_OR_EDIT = "";
     private static final String LIST = "";
-    private final UserDAO dao;
+    private final EduardoDAO dao;
 
     public UserController() {
         super();
-        dao = new UserDAO();
+        dao = new EduardoDAO();
     }
 
     /**
@@ -48,7 +45,9 @@ public class UserController extends HttpServlet {
                 long eduardocpf = Integer.parseInt(request.getParameter("eduardocpf"));
                  {
                     try {
-                        dao.deleteByID(eduardocpf);
+                        Eduardo obj = new Eduardo();
+                        obj.setEduardocpf(eduardocpf);
+                        dao.delete(obj);
                     } catch (DatabaseException ex) {
                         request.setAttribute("alert", ex.getMessage());
                     }

@@ -12,6 +12,10 @@ public class Eduardo {
     private Date eduardodatacadastro;
     private String eduardonome;
     private String eduardoendereco;
+    private String eduardoemail;
+    private String eduardocelular;
+    private char eduardosexo;
+    private boolean eduardostatus;
 
     public long getEduardocpf() {
         return eduardocpf;
@@ -43,6 +47,38 @@ public class Eduardo {
 
     public void setEduardoendereco(String eduardoendereco) {
         this.eduardoendereco = eduardoendereco;
+    }
+
+    public String getEduardoemail() {
+        return eduardoemail;
+    }
+
+    public void setEduardoemail(String eduardoemail) {
+        this.eduardoemail = eduardoemail;
+    }
+
+    public String getEduardocelular() {
+        return eduardocelular;
+    }
+
+    public void setEduardocelular(String eduardocelular) {
+        this.eduardocelular = eduardocelular;
+    }
+
+    public char getEduardosexo() {
+        return eduardosexo;
+    }
+
+    public void setEduardosexo(char eduardosexo) {
+        this.eduardosexo = eduardosexo;
+    }
+
+    public boolean getEduardostatus() {
+        return eduardostatus;
+    }
+
+    public void setEduardostatus(boolean eduardostatus) {
+        this.eduardostatus = eduardostatus;
     }
 
 }

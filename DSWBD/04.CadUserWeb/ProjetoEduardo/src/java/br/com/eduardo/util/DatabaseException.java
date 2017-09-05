@@ -1,4 +1,4 @@
-package br.com.eduardo.error;
+package br.com.eduardo.util;
 
 /**
  *

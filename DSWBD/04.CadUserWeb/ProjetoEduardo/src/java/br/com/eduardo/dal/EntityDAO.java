@@ -1,6 +1,6 @@
 package br.com.eduardo.dal;
 
-import br.com.eduardo.error.DatabaseException;
+import br.com.eduardo.util.DatabaseException;
 import java.util.List;
 
 /**
