@@ -1,3 +1,5 @@
+<%@page import="java.util.List"%>
+<%@page import="br.com.eduardo.model.Eduardo"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
@@ -6,10 +8,11 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <link rel="stylesheet" href="./css/styles.css" type="text/css">
         <title>Mostrar Usuários</title>
     </head>
     <body>
-        <table border=1>
+        <table border="1" cellspacing="0">
             <thead>
                 <tr>
                     <th>CPF</th>
@@ -24,17 +27,30 @@
                 </tr>
             </thead>
             <tbody>
+                <%
+                    if (((List<Eduardo>) request.getAttribute("users")).size() < 1) {
+                %>
+                <tr><td colspan="9"><p align="center"><i>Nenhum registro encontrado</i></p></td></tr>
+                <%
+                } else {
+                %>
                 <c:forEach items="${users}" var="user">
                     <tr>
-                        <td><c:out value="${user.userid}" /></td>
-                        <td><c:out value="${user.firstName}" /></td>
-                        <td><c:out value="${user.lastName}" /></td>
-                        <td><fmt:formatDate pattern="yyyy-MMM-dd" value="${user.dob}" /></td>
-                        <td><c:out value="${user.email}" /></td>
-                        <td><a href="UserController?action=edit&userId=<c:out value="${user.userid}"/>">Update</a></td>
-                        <td><a href="UserController?action=delete&userId=<c:out value="${user.userid}"/>">Delete</a></td>
+                        <td><c:out value="${user.eduardocpf}" /></td>
+                        <td><fmt:formatDate pattern="dd/MM/yyyy" value="${user.eduardodatacadastro}" /></td>
+                        <td><c:out value="${user.eduardonome}" /></td>
+                        <td><c:out value="${user.eduardoendereco}" /></td>
+                        <td><c:out value="${user.eduardoemail}" /></td>
+                        <td><c:out value="${user.eduardocelular}" /></td>
+                        <td><c:out value="${user.eduardosexo}" /></td>
+                        <td><c:out value="${user.eduardostatus}" /></td>
+                        <td><a href="UserController?action=edit&userId=<c:out value="${user.eduardocpf}"/>">Update</a></td>
+                        <td><a href="UserController?action=delete&userId=<c:out value="${user.eduardocpf}"/>">Delete</a></td>
                     </tr>
                 </c:forEach>
+                <%
+                    }
+                %>
             </tbody>
         </table>
         <p><a href="UserController?action=insert">Add User</a></p>

@@ -124,7 +124,7 @@ public class EduardoDAO implements EntityDAO<Eduardo> {
 
     @Override
     public List<Eduardo> getAll() throws DatabaseException {
-        String sql = "SELECT * FROM %s";
+        String sql = String.format("SELECT * FROM %s", getTabela());
         List<Eduardo> lista = new ArrayList<>();
 
         try (PreparedStatement pstmt = cnx.prepareStatement(sql)) {

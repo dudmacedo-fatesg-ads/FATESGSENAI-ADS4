@@ -4,6 +4,8 @@ import br.com.eduardo.dal.EduardoDAO;
 import br.com.eduardo.util.DatabaseException;
 import br.com.eduardo.model.Eduardo;
 import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -18,8 +20,8 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet(name = "UserController", urlPatterns = {"/UserController"})
 public class UserController extends HttpServlet {
 
-    private static final String INSERT_OR_EDIT = "";
-    private static final String LIST = "";
+    private static final String INSERT_OR_EDIT = "/user.jsp";
+    private static final String LIST = "/listUser.jsp";
     private final EduardoDAO dao;
 
     public UserController() {
@@ -54,7 +56,11 @@ public class UserController extends HttpServlet {
                 }
                 forward = LIST;
                 request.setAttribute("alert", "Usuário excluído com sucesso.");
-                request.setAttribute("users", dao.getAll());
+                try {
+                    request.setAttribute("users", dao.getAll());
+                } catch (DatabaseException ex) {
+                    Logger.getLogger(UserController.class.getName()).log(Level.SEVERE, null, ex);
+                }
                 break;
             case "edit":
                 forward = INSERT_OR_EDIT;
@@ -68,7 +74,11 @@ public class UserController extends HttpServlet {
                 break;
             case "listUser":
                 forward = LIST;
-                request.setAttribute("users", dao.getAll());
+                try {
+                    request.setAttribute("users", dao.getAll());
+                } catch (DatabaseException ex) {
+                    Logger.getLogger(UserController.class.getName()).log(Level.SEVERE, null, ex);
+                }
                 break;
             default:
                 forward = INSERT_OR_EDIT;
