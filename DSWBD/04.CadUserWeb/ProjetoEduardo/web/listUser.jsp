@@ -23,7 +23,7 @@
                     <th>Celular</th>
                     <th>Sexo</th>
                     <th>Status</th>
-                    <th colspan=2>Action</th>
+                    <th colspan=2>Ação</th>
                 </tr>
             </thead>
             <tbody>
@@ -36,7 +36,7 @@
                 %>
                 <c:forEach items="${users}" var="user">
                     <tr>
-                        <td><c:out value="${user.eduardocpf}" /></td>
+                        <td><c:out value="${user.eduardocpfformat}" /></td>
                         <td><fmt:formatDate pattern="dd/MM/yyyy" value="${user.eduardodatacadastro}" /></td>
                         <td><c:out value="${user.eduardonome}" /></td>
                         <td><c:out value="${user.eduardoendereco}" /></td>
@@ -53,6 +53,6 @@
                 %>
             </tbody>
         </table>
-        <p><a href="UserController?action=insert">Add User</a></p>
+        <p><a href="UserController?action=insert">Adicionar</a></p>
     </body>
 </html>

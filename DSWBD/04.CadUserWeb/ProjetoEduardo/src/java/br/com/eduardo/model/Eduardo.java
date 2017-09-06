@@ -20,6 +20,17 @@ public class Eduardo {
     public long getEduardocpf() {
         return eduardocpf;
     }
+    
+    public String getEduardocpfformat() {
+        String pre = String.format("%011d", eduardocpf);
+        
+        return String.format(
+                "%s.%s.%s-%s", 
+                pre.substring(0, 3),
+                pre.substring(3, 6),
+                pre.substring(6, 9),
+                pre.substring(9));
+    }
 
     public void setEduardocpf(long eduardocpf) {
         this.eduardocpf = eduardocpf;
