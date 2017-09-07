@@ -17,14 +17,14 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author eduardo
  */
-@WebServlet(name = "UserController", urlPatterns = {"/UserController"})
-public class UserController extends HttpServlet {
+@WebServlet(name = "EduardoController", urlPatterns = {"/EduardoController"})
+public class EduardoController extends HttpServlet {
 
-    private static final String INSERT_OR_EDIT = "/user.jsp";
-    private static final String LIST = "/listUser.jsp";
+    private static final String INSERT_OR_EDIT = "/eduardo.jsp";
+    private static final String LIST = "/listEduardo.jsp";
     private final EduardoDAO dao;
 
-    public UserController() {
+    public EduardoController() {
         super();
         dao = new EduardoDAO();
     }
@@ -57,9 +57,9 @@ public class UserController extends HttpServlet {
                 forward = LIST;
                 request.setAttribute("alert", "Usuário excluído com sucesso.");
                 try {
-                    request.setAttribute("users", dao.getAll());
+                    request.setAttribute("eduardos", dao.getAll());
                 } catch (DatabaseException ex) {
-                    Logger.getLogger(UserController.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(EduardoController.class.getName()).log(Level.SEVERE, null, ex);
                 }
                 break;
             case "edit":
@@ -67,17 +67,17 @@ public class UserController extends HttpServlet {
                 eduardocpf = Long.parseLong(request.getParameter("eduardocpf"));
                 try {
                     Eduardo user = dao.retrieve(eduardocpf);
-                    request.setAttribute("user", user);
+                    request.setAttribute("eduardos", user);
                 } catch (DatabaseException ex) {
                     request.setAttribute("alert", ex.getMessage());
                 }
                 break;
-            case "listUser":
+            case "list":
                 forward = LIST;
                 try {
-                    request.setAttribute("users", dao.getAll());
+                    request.setAttribute("eduardos", dao.getAll());
                 } catch (DatabaseException ex) {
-                    Logger.getLogger(UserController.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(EduardoController.class.getName()).log(Level.SEVERE, null, ex);
                 }
                 break;
             default:

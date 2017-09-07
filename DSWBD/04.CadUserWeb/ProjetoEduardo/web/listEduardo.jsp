@@ -28,24 +28,24 @@
             </thead>
             <tbody>
                 <%
-                    if (((List<Eduardo>) request.getAttribute("users")).size() < 1) {
+                    if (((List<Eduardo>) request.getAttribute("eduardos")).size() < 1) {
                 %>
                 <tr><td colspan="9"><p align="center"><i>Nenhum registro encontrado</i></p></td></tr>
                 <%
                 } else {
                 %>
-                <c:forEach items="${users}" var="user">
+                <c:forEach items="${eduardos}" var="eduardo">
                     <tr>
-                        <td><c:out value="${user.eduardocpfformat}" /></td>
-                        <td><fmt:formatDate pattern="dd/MM/yyyy" value="${user.eduardodatacadastro}" /></td>
-                        <td><c:out value="${user.eduardonome}" /></td>
-                        <td><c:out value="${user.eduardoendereco}" /></td>
-                        <td><c:out value="${user.eduardoemail}" /></td>
-                        <td><c:out value="${user.eduardocelular}" /></td>
-                        <td><c:out value="${user.eduardosexo}" /></td>
-                        <td><c:out value="${user.eduardostatus}" /></td>
-                        <td><a href="UserController?action=edit&userId=<c:out value="${user.eduardocpf}"/>">Update</a></td>
-                        <td><a href="UserController?action=delete&userId=<c:out value="${user.eduardocpf}"/>">Delete</a></td>
+                        <td><c:out value="${eduardo.eduardocpfformat}" /></td>
+                        <td><fmt:formatDate pattern="dd/MM/yyyy" value="${eduardo.eduardodatacadastro}" /></td>
+                        <td><c:out value="${eduardo.eduardonome}" /></td>
+                        <td><c:out value="${eduardo.eduardoendereco}" /></td>
+                        <td><c:out value="${eduardo.eduardoemail}" /></td>
+                        <td><c:out value="${eduardo.eduardocelular}" /></td>
+                        <td><c:out value="${eduardo.eduardosexo}" /></td>
+                        <td><c:out value="${eduardo.eduardostatusdescricao}" /></td>
+                        <td><a href="EduardoController?action=edit&userId=<c:out value="${eduardo.eduardocpf}"/>">Update</a></td>
+                        <td><a href="EduardoController?action=delete&userId=<c:out value="${eduardo.eduardocpf}"/>">Delete</a></td>
                     </tr>
                 </c:forEach>
                 <%
@@ -53,6 +53,6 @@
                 %>
             </tbody>
         </table>
-        <p><a href="UserController?action=insert">Adicionar</a></p>
+        <p><a href="EduardoController?action=insert">Adicionar</a></p>
     </body>
 </html>

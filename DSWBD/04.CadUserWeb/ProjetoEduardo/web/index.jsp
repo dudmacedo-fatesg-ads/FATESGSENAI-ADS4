@@ -12,6 +12,6 @@
         <title>Página Principal</title>
     </head>
     <body>
-        <jsp:forward page="/UserController?action=listUser" />
+        <jsp:forward page="/EduardoController?action=list" />
     </body>
 </html>

@@ -87,6 +87,10 @@ public class Eduardo {
     public boolean getEduardostatus() {
         return eduardostatus;
     }
+    
+    public String getEduardostatusdescricao() {
+        return (eduardostatus)?"Ativo":"Inativo";
+    }
 
     public void setEduardostatus(boolean eduardostatus) {
         this.eduardostatus = eduardostatus;
