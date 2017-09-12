@@ -10,6 +10,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -103,7 +105,8 @@ public class EduardoDAO implements EntityDAO<Eduardo> {
 
             pstmt.execute();
         } catch (SQLException ex) {
-            throw new DatabaseException(ex, "Erro ao inserir registro");
+            Logger.getLogger(EduardoDAO.class.getName()).log(Level.SEVERE, null, ex);
+            throw new DatabaseException(ex, "Erro ao atualizar registro");
         }
     }
 

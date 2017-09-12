@@ -4,6 +4,7 @@ import br.com.eduardo.dal.EduardoDAO;
 import br.com.eduardo.util.DatabaseException;
 import br.com.eduardo.model.Eduardo;
 import java.io.IOException;
+import java.util.GregorianCalendar;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.RequestDispatcher;
@@ -41,47 +42,56 @@ public class EduardoController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String forward;
+        String action = request.getParameter("action");
 
-        switch (request.getParameter("action")) {
-            case "delete":
-                long eduardocpf = Integer.parseInt(request.getParameter("eduardocpf"));
-                 {
-                    try {
-                        Eduardo obj = new Eduardo();
-                        obj.setEduardocpf(eduardocpf);
-                        dao.delete(obj);
-                    } catch (DatabaseException ex) {
-                        request.setAttribute("alert", ex.getMessage());
-                    }
-                }
-                forward = LIST;
+        if (action.equals("delete")) {
+            long eduardocpf = Integer.parseInt(request.getParameter("eduardocpf"));
+            try {
+                Eduardo obj = new Eduardo();
+                obj.setEduardocpf(eduardocpf);
+                dao.delete(obj);
                 request.setAttribute("alert", "Usuário excluído com sucesso.");
-                try {
-                    request.setAttribute("eduardos", dao.getAll());
-                } catch (DatabaseException ex) {
-                    Logger.getLogger(EduardoController.class.getName()).log(Level.SEVERE, null, ex);
-                }
-                break;
-            case "edit":
-                forward = INSERT_OR_EDIT;
-                eduardocpf = Long.parseLong(request.getParameter("eduardocpf"));
-                try {
-                    Eduardo user = dao.retrieve(eduardocpf);
-                    request.setAttribute("eduardos", user);
-                } catch (DatabaseException ex) {
-                    request.setAttribute("alert", ex.getMessage());
-                }
-                break;
-            case "list":
-                forward = LIST;
-                try {
-                    request.setAttribute("eduardos", dao.getAll());
-                } catch (DatabaseException ex) {
-                    Logger.getLogger(EduardoController.class.getName()).log(Level.SEVERE, null, ex);
-                }
-                break;
-            default:
-                forward = INSERT_OR_EDIT;
+            } catch (DatabaseException ex) {
+                request.setAttribute("alert", "Erro ao excluir usuário");
+                Logger.getLogger(EduardoController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+            forward = LIST;
+            try {
+                request.setAttribute("eduardos", dao.getAll());
+            } catch (DatabaseException ex) {
+                Logger.getLogger(EduardoController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } else if (action.equals("edit")) {
+
+            forward = INSERT_OR_EDIT;
+            long eduardocpf = Long.parseLong(request.getParameter("eduardocpf"));
+            try {
+                Eduardo eduardo = dao.retrieve(eduardocpf);
+                request.setAttribute("eduardo", eduardo);
+                request.setAttribute("title", "Editar Usuário");
+                request.setAttribute("action", "update");
+            } catch (DatabaseException ex) {
+                request.setAttribute("alert", "Erro ao buscar dados para edição");
+            }
+
+        } else if (action.equals("insert")) {
+
+            forward = INSERT_OR_EDIT;
+            request.setAttribute("action", "insert");
+            request.setAttribute("title", "Inserir Usuário");
+
+        } else if (action.equals("list")) {
+
+            forward = LIST;
+            try {
+                request.setAttribute("eduardos", dao.getAll());
+            } catch (DatabaseException ex) {
+                Logger.getLogger(EduardoController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+        } else {
+            forward = LIST;
         }
 
         RequestDispatcher view = request.getRequestDispatcher(forward);
@@ -99,17 +109,52 @@ public class EduardoController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-//        processRequest(request, response);
+        request.setCharacterEncoding("UTF-8");
+        String action = request.getParameter("action");
+
+        if (action.equals("insert")) {
+            Eduardo eduardo = new Eduardo();
+
+            eduardo.setEduardocpf(Long.parseLong(request.getParameter("eduardocpf")));
+            eduardo.setEduardodatacadastro(new GregorianCalendar().getTime());
+            eduardo.setEduardonome(request.getParameter("eduardonome"));
+            eduardo.setEduardoendereco(request.getParameter("eduardoendereco"));
+            eduardo.setEduardoemail(request.getParameter("eduardoemail"));
+            eduardo.setEduardocelular(request.getParameter("eduardocelular"));
+            eduardo.setEduardosexo(request.getParameter("eduardosexo").charAt(0));
+            eduardo.setEduardostatus(request.getParameter("eduardostatus").equals("true"));
+
+            try {
+                dao.create(eduardo);
+                request.setAttribute("alert", "Usuário cadastrado com sucesso.");
+            } catch (DatabaseException ex) {
+                request.setAttribute("alert", "Erro ao cadastrar usuário.");
+                Logger.getLogger(EduardoController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } else if (action.equals("update")) {
+            try {
+                Eduardo eduardo = dao.retrieve(Long.parseLong(request.getParameter("eduardocpf")));
+
+                eduardo.setEduardonome(request.getParameter("eduardonome"));
+                eduardo.setEduardoendereco(request.getParameter("eduardoendereco"));
+                eduardo.setEduardoemail(request.getParameter("eduardoemail"));
+                eduardo.setEduardocelular(request.getParameter("eduardocelular"));
+                eduardo.setEduardosexo(request.getParameter("eduardosexo").charAt(0));
+                eduardo.setEduardostatus(request.getParameter("eduardostatus").equals("true"));
+
+                dao.update(eduardo);
+                request.setAttribute("alert", "Usuário atualizado com sucesso.");
+            } catch (DatabaseException ex) {
+                request.setAttribute("alert", "Erro ao atualizar usuário.");
+                Logger.getLogger(EduardoController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        RequestDispatcher view = request.getRequestDispatcher(LIST);
+        try {
+            request.setAttribute("eduardos", dao.getAll());
+        } catch (DatabaseException ex) {
+            Logger.getLogger(EduardoController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        view.forward(request, response);
     }
-
-    /**
-     * Returns a short description of the servlet.
-     *
-     * @return a String containing servlet description
-     */
-    @Override
-    public String getServletInfo() {
-        return "Short description";
-    }// </editor-fold>
-
 }
