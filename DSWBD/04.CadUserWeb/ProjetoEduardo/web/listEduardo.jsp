@@ -28,13 +28,10 @@
                 </tr>
             </thead>
             <tbody>
-                <%
-                    if (((List<Eduardo>) request.getAttribute("eduardos")).size() < 1) {
-                %>
-                <tr><td colspan="9"><p align="center"><i>Nenhum registro encontrado</i></p></td></tr>
-                <%
-                } else {
-                %>
+                <c:if test = "${eduardos.size() < 1}">
+                    <tr><td colspan="9"><p align="center"><i>Nenhum registro encontrado</i></p></td></tr>
+                </c:if>
+
                 <c:forEach items="${eduardos}" var="eduardo">
                     <tr>
                         <td><c:out value="${eduardo.eduardocpfformat}" /></td>
@@ -46,19 +43,16 @@
                             <c:if test = "${eduardo.eduardosexo.toString() == 'M'}">Masculino</c:if>
                             <c:if test = "${eduardo.eduardosexo.toString() == 'F'}">Feminino</c:if>
                             <c:if test = "${eduardo.eduardosexo.toString() == 'O'}">Outro</c:if>
-                        </td>
-                        <td>
+                            </td>
+                            <td>
                             <c:if test = "${eduardo.eduardostatus == true}">Ativo</c:if>
                             <c:if test = "${eduardo.eduardostatus == false}">Inativo</c:if>
-                        </td>
-                        <td><fmt:formatDate pattern="dd/MM/yyyy" value="${eduardo.eduardodatacadastro}" /></td>
+                            </td>
+                            <td><fmt:formatDate pattern="dd/MM/yyyy" value="${eduardo.eduardodatacadastro}" /></td>
                         <td><a href="EduardoController?action=edit&eduardocpf=<c:out value="${eduardo.eduardocpf}"/>">Editar</a></td>
                         <td><a href="EduardoController?action=delete&eduardocpf=<c:out value="${eduardo.eduardocpf}"/>" onclick="return questiona('Você tem certeza que deseja excluir o usuário?')">Excluir</a></td>
                     </tr>
                 </c:forEach>
-                <%
-                    }
-                %>
             </tbody>
         </table>
         <p><a href="EduardoController?action=insert">Adicionar</a></p>

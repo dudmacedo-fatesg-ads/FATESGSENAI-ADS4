@@ -45,7 +45,7 @@ public class EduardoController extends HttpServlet {
         String action = request.getParameter("action");
 
         if (action.equals("delete")) {
-            long eduardocpf = Integer.parseInt(request.getParameter("eduardocpf"));
+            long eduardocpf = Long.parseLong(request.getParameter("eduardocpf"));
             try {
                 Eduardo obj = new Eduardo();
                 obj.setEduardocpf(eduardocpf);
