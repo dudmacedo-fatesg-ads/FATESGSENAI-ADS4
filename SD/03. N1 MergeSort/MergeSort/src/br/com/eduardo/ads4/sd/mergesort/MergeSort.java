@@ -16,9 +16,10 @@ public abstract class MergeSort {
         return vetor;
     }
 
-    public abstract void ordenar();
+    public abstract int[] ordenar();
 
     protected void merge(int inicio, int meio, int fim) {
+        
         int[] aux = new int[vetor.length];
 
         for (int i = inicio; i <= fim; i++) {

@@ -3,8 +3,6 @@ package br.com.eduardo.ads4.sd.mergesort;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -34,14 +32,12 @@ public class MultiThreadingMergeSort extends MergeSort implements Runnable {
     }
 
     @Override
-    public void ordenar() {
-//        Thread t = new Thread(new MultiThreadingMergeSort(vetor, inicio, fim));
-//        t.start();
-
+    public int[] ordenar() {
         ExecutorService executor = Executors.newSingleThreadExecutor();
 
         executor.execute(new Thread(new MultiThreadingMergeSort(vetor, inicio, fim)));
 
+        App.nthreads++;
         executor.shutdown();
 
         try {
@@ -49,21 +45,19 @@ public class MultiThreadingMergeSort extends MergeSort implements Runnable {
         } catch (InterruptedException ex) {
             ex.printStackTrace();
         }
+        
+        return vetor;
     }
 
     private void ordena() {
         int meio = (inicio + fim) / 2;
-        if (inicio < fim) {
-//            Thread left = new Thread(new MultiThreadingMergeSort(vetor, inicio, meio));
-//            left.start();
-//            Thread right = new Thread(new MultiThreadingMergeSort(vetor, meio + 1, fim));
-//            right.start();
-
+        if (inicio + 1 < fim) {
             ExecutorService executor = Executors.newFixedThreadPool(2);
 
             executor.execute(new Thread(new MultiThreadingMergeSort(vetor, inicio, meio)));
             executor.execute(new Thread(new MultiThreadingMergeSort(vetor, meio + 1, fim)));
 
+            App.nthreads += 2;
             executor.shutdown();
             try {
                 executor.awaitTermination(1, TimeUnit.DAYS);

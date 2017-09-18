@@ -8,6 +8,8 @@ import java.util.Random;
  */
 public class App {
 
+    public static int nthreads;
+    
     /**
      * @param args the command line arguments
      */
@@ -45,10 +47,13 @@ public class App {
 
         // Ordenação com MultiThreading
         System.out.println("// Ordenação com multithreading:");
+        nthreads = 0;
         Ini = System.currentTimeMillis();
         MergeSort trdMergeSort = new MultiThreadingMergeSort(vetor.clone());
+//        int[] trdvetor = trdMergeSort.ordenar();
         trdMergeSort.ordenar();
         Diff = System.currentTimeMillis() - Ini;
+        System.out.println(nthreads + " Threads abertas.");
         System.out.println("Tempo de Execução: "
                 + String.format(
                         "%d:%02d:%02d.%03d", 
@@ -56,6 +61,7 @@ public class App {
                         (Diff / 60000) % 60,
                         (Diff / 1000) % 60,
                         Diff % 1000));
+//        printVetor(trdvetor);
     }
     
 //    private static void printVetor(int[] vetor) {

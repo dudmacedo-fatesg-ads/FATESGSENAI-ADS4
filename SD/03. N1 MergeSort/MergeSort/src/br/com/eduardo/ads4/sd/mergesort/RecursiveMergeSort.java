@@ -5,13 +5,15 @@ package br.com.eduardo.ads4.sd.mergesort;
  * @author eduardo
  */
 public class RecursiveMergeSort extends MergeSort {
+
     public RecursiveMergeSort(int[] vetor) {
         super(vetor);
     }
-    
+
     @Override
-    public void ordenar() {
+    public int[] ordenar() {
         ordenar(0, vetor.length - 1);
+        return (vetor);
     }
 
     private void ordenar(int inicio, int fim) {
