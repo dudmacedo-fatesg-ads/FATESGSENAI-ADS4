@@ -1,21 +1,17 @@
 package exe1.model;
 
-/**
- *
- * @author eduardo
- */
 public class Professor {
 
     private int matricula;
     private String nome;
-    private Departamento departamento;
-    private Titulacao titulacao;
-    private Regime regime;
+    private String departamento;
+    private String titulacao;
+    private String regime;
     private int exp_docencia;
     private int exp_profissional;
 
-    public Professor(int matricula, String nome, Departamento departamento,
-            Titulacao titulacao, Regime regime, int exp_docencia, int exp_profissional) {
+    public Professor(int matricula, String nome, String departamento,
+            String titulacao, String regime, int exp_docencia, int exp_profissional) {
         this.matricula = matricula;
         this.nome = nome;
         this.departamento = departamento;
@@ -41,27 +37,27 @@ public class Professor {
         this.nome = nome;
     }
 
-    public Departamento getDepartamento() {
+    public String getDepartamento() {
         return departamento;
     }
 
-    public void setDepartamento(Departamento departamento) {
+    public void setDepartamento(String departamento) {
         this.departamento = departamento;
     }
 
-    public Titulacao getTitulacao() {
+    public String getTitulacao() {
         return titulacao;
     }
 
-    public void setTitulacao(Titulacao titulacao) {
+    public void setTitulacao(String titulacao) {
         this.titulacao = titulacao;
     }
 
-    public Regime getRegime() {
+    public String getRegime() {
         return regime;
     }
 
-    public void setRegime(Regime regime) {
+    public void setRegime(String regime) {
         this.regime = regime;
     }
 

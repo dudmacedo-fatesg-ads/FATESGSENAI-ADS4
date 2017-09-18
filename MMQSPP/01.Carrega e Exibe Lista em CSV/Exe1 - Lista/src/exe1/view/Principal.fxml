@@ -13,13 +13,13 @@
    <children>
       <HBox alignment="CENTER_LEFT" layoutX="15.0" layoutY="15.0" spacing="5.0">
          <children>
-            <Label prefWidth="140.0" text="Estrutura de Dados:" />
+            <Label disable="true" prefWidth="140.0" text="Estrutura de Dados:" />
             <ComboBox fx:id="cmbEstrutura" disable="true" prefHeight="26.0" prefWidth="188.0" />
          </children>
       </HBox>
       <HBox alignment="CENTER_LEFT" layoutX="15.0" layoutY="15.0" spacing="5.0">
          <children>
-            <Label prefWidth="140.0" text="Ordenar por:" />
+            <Label disable="true" prefWidth="140.0" text="Ordenar por:" />
             <ComboBox fx:id="cmbPropriedade" disable="true" prefHeight="26.0" prefWidth="188.0" />
             <Button fx:id="btnProcurarArquivo" mnemonicParsing="false" onAction="#btnProcurarArquivo_onAction" text="Procurar Arquivo" />
          </children>
