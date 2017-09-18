@@ -15,6 +15,7 @@ import javafx.stage.Stage;
  */
 public class App extends Application{
 
+    public static int nthreads;
     private static Stage stage;
 
     public static Stage getStage() {

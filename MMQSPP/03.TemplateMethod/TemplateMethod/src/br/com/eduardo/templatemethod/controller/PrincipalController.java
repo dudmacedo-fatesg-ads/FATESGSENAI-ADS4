@@ -133,7 +133,7 @@ public class PrincipalController implements Initializable {
                     break;
             }
 
-            Iterator<Professor> it = pprofessor.listarAlunos();
+            Iterator<Professor> it = pprofessor.listarProfessores();
 
             ObservableList<Professor> dados = FXCollections.observableArrayList();
             while (it.hasNext()) {
