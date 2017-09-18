@@ -111,7 +111,7 @@ public abstract class PProfessor {
 
         private void ordena() {
             int meio = (inicio + fim) / 2;
-            if (inicio < fim && inicio + 1 < fim) {
+            if (inicio + 1 < fim) {
                 ExecutorService executor = Executors.newFixedThreadPool(2);
 
                 executor.execute(new Thread(new MultiThreadingMergeSort(professores, inicio, meio)));
