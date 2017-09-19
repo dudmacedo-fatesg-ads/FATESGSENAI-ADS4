@@ -31,7 +31,7 @@ import java.util.ArrayList;
 /**
  * FXML Controller class
  *
- * @author dudma
+ * @author eduardo
  */
 public class PrincipalController implements Initializable {
 

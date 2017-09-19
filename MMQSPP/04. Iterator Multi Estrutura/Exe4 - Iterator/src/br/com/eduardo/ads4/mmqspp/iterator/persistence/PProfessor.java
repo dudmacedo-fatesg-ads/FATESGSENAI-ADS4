@@ -35,6 +35,12 @@ public abstract class PProfessor {
         IPProfessorEstrutura estrutura = null;
 
         switch (tp_estrutura) {
+            case 0:
+                estrutura = new PProfessorEstrArrayList(this);
+                break;
+            case 1:
+                estrutura = new PProfessorEstrPilha(this);
+                break;
             case 3:
                 estrutura = new PProfessorEstrLista(this);
                 break;
