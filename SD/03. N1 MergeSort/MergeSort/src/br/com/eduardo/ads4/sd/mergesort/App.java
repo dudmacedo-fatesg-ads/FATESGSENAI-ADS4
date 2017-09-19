@@ -50,8 +50,7 @@ public class App {
         nthreads = 0;
         Ini = System.currentTimeMillis();
         MergeSort trdMergeSort = new MultiThreadingMergeSort(vetor.clone());
-//        int[] trdvetor = trdMergeSort.ordenar();
-        trdMergeSort.ordenar();
+        int[] trdvetor = trdMergeSort.ordenar();
         Diff = System.currentTimeMillis() - Ini;
         System.out.println(nthreads + " Threads abertas.");
         System.out.println("Tempo de Execução: "
@@ -64,17 +63,17 @@ public class App {
 //        printVetor(trdvetor);
     }
     
-//    private static void printVetor(int[] vetor) {
-//        String print = "[";
-//        for (int i = 0; i < vetor.length; i++) {
-//            print += String.format("%03d", vetor[i]);
-//            if (i != vetor.length - 1) {
-//                print += "][";
-//            }
-//        }
-//        print += "]";
-//        
-//        System.out.println(print);
-//    }
+    private static void printVetor(int[] vetor) {
+        String print = "[";
+        for (int i = 0; i < vetor.length; i++) {
+            print += String.format("%03d", vetor[i]);
+            if (i != vetor.length - 1) {
+                print += "][";
+            }
+        }
+        print += "]";
+        
+        System.out.println(print);
+    }
     
 }

@@ -3,6 +3,8 @@ package br.com.eduardo.ads4.sd.mergesort;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -45,7 +47,7 @@ public class MultiThreadingMergeSort extends MergeSort implements Runnable {
         } catch (InterruptedException ex) {
             ex.printStackTrace();
         }
-        
+
         return vetor;
     }
 
@@ -68,5 +70,4 @@ public class MultiThreadingMergeSort extends MergeSort implements Runnable {
 
         merge(inicio, meio, fim);
     }
-
 }

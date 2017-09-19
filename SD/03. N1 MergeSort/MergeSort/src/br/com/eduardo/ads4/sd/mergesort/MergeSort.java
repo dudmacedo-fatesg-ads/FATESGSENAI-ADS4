@@ -6,7 +6,7 @@ package br.com.eduardo.ads4.sd.mergesort;
  */
 public abstract class MergeSort {
 
-    protected int[] vetor;
+    protected final int[] vetor;
 
     public MergeSort(int[] vetor) {
         this.vetor = vetor;
