@@ -3,6 +3,14 @@
     Author     : eduardo
 */
 
+table .lista {
+    width: 100%;
+}
+
+.tablerow > td, th {
+    padding: 5px;
+}
+
 .navbar {
     background-color: #090;
     border-color: #030;

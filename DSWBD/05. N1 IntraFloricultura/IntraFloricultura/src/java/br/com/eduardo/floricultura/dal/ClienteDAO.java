@@ -9,6 +9,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -67,7 +69,9 @@ public class ClienteDAO implements EntityDAO<Cliente> {
             }
 
         } catch (SQLException ex) {
+            Logger.getLogger(ClienteDAO.class.getName()).log(Level.SEVERE, null, ex);
             throw new DatabaseException(ex, "Erro ao consultar registros");
+            
         }
 
         return lista;
