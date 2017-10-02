@@ -4,7 +4,7 @@ package br.com.eduardo.ads4.mmqspp.iterator.model;
  *
  * @author eduardo
  */
-public class Professor {
+public class Professor implements Comparable {
 
     private int matricula;
     private String nome;
@@ -79,5 +79,10 @@ public class Professor {
 
     public void setExp_profissional(int exp_profissional) {
         this.exp_profissional = exp_profissional;
+    }
+
+    @Override
+    public int compareTo(Object o) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }
