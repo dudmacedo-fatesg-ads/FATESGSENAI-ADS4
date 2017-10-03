@@ -7,7 +7,7 @@ import java.util.Date;
  *
  * @author eduardo
  */
-public class Cliente {
+public class Fornecedor {
 
     public static final char PESSOA_JURIDICA = 'J';
     public static final char PESSOA_FISICA = 'F';
@@ -38,17 +38,6 @@ public class Cliente {
 
     public void setIdf(long idf) {
         this.idf = idf;
-    }
-
-    public String getTiponome() {
-        switch (tipo) {
-            case 'F':
-                return "Pessoa Física";
-            case 'J':
-                return "Pessoa Jurídica";
-            default:
-                return "";
-        }
     }
 
     public char getTipo() {
@@ -99,7 +88,7 @@ public class Cliente {
         this.dtcadastro = dtcadastro;
     }
 
-    public boolean getStatus() {
+    public boolean isStatus() {
         return status;
     }
 

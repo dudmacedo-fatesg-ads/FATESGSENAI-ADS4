@@ -1,8 +1,10 @@
 package br.com.eduardo.floricultura.bll;
 
 import br.com.eduardo.floricultura.dal.ClienteDAO;
+import br.com.eduardo.floricultura.model.Cliente;
 import br.com.eduardo.floricultura.util.DatabaseException;
 import java.io.IOException;
+import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.RequestDispatcher;
@@ -48,7 +50,7 @@ public class CadClientes extends HttpServlet {
             try {
                 request.setAttribute("clientes", dao.getAll());
             } catch (DatabaseException ex) {
-                request.setAttribute("alerta", "Erro ao listar clientes");
+                request.setAttribute("alert", "Erro ao listar clientes");
                 Logger.getLogger(CadClientes.class.getName()).log(Level.SEVERE, null, ex);
             }
         } // Excluir
@@ -72,23 +74,20 @@ public class CadClientes extends HttpServlet {
 //            }
         } else if (action.equals("edit")) {
 //            
-//            forward = INSERT_OR_EDIT;
-//            long eduardocpf = Long.parseLong(request.getParameter("eduardocpf"));
-//            try {
-//                Eduardo eduardo = dao.retrieve(eduardocpf);
-//                request.setAttribute("eduardo", eduardo);
-//                request.setAttribute("title", "Editar Usuário");
-//                request.setAttribute("action", "update");
-//            } catch (DatabaseException ex) {
-//                request.setAttribute("alert", "Erro ao buscar dados para edição");
-//            }
-//
+            forward = INSERT_OR_EDIT;
+            long idf = Long.parseLong(request.getParameter("idf"));
+            char tipo = request.getParameter("tipo").charAt(0);
+            try {
+                Cliente cliente = dao.retrieve(idf, tipo);
+                request.setAttribute("cliente", cliente);
+                request.setAttribute("action", "update");
+            } catch (DatabaseException ex) {
+                request.setAttribute("alert", "Erro ao buscar dados para edição");
+            }
         } else if (action.equals("insert")) {
-            
+
             forward = INSERT_OR_EDIT;
             request.setAttribute("action", "insert");
-            request.setAttribute("title", "Inserir Cliente");
-            
         }
 
         RequestDispatcher view = request.getRequestDispatcher(forward);
@@ -106,52 +105,63 @@ public class CadClientes extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-//        request.setCharacterEncoding("UTF-8");
-//        String action = request.getParameter("action");
+        request.setCharacterEncoding("UTF-8");
+        String action = request.getParameter("action");
 //
-//        if (action.equals("insert")) {
-//            Eduardo eduardo = new Eduardo();
-//
-//            eduardo.setEduardocpf(Long.parseLong(request.getParameter("eduardocpf")));
-//            eduardo.setEduardodatacadastro(new GregorianCalendar().getTime());
-//            eduardo.setEduardonome(request.getParameter("eduardonome"));
-//            eduardo.setEduardoendereco(request.getParameter("eduardoendereco"));
-//            eduardo.setEduardoemail(request.getParameter("eduardoemail"));
-//            eduardo.setEduardocelular(request.getParameter("eduardocelular"));
-//            eduardo.setEduardosexo(request.getParameter("eduardosexo").charAt(0));
-//            eduardo.setEduardostatus(request.getParameter("eduardostatus").equals("true"));
-//
-//            try {
-//                dao.create(eduardo);
-//                request.setAttribute("alert", "Usuário cadastrado com sucesso.");
-//            } catch (DatabaseException ex) {
-//                request.setAttribute("alert", "Erro ao cadastrar usuário.");
-//                Logger.getLogger(EduardoController.class.getName()).log(Level.SEVERE, null, ex);
-//            }
-//        } else if (action.equals("update")) {
-//            try {
-//                Eduardo eduardo = dao.retrieve(Long.parseLong(request.getParameter("eduardocpf")));
-//
-//                eduardo.setEduardonome(request.getParameter("eduardonome"));
-//                eduardo.setEduardoendereco(request.getParameter("eduardoendereco"));
-//                eduardo.setEduardoemail(request.getParameter("eduardoemail"));
-//                eduardo.setEduardocelular(request.getParameter("eduardocelular"));
-//                eduardo.setEduardosexo(request.getParameter("eduardosexo").charAt(0));
-//                eduardo.setEduardostatus(request.getParameter("eduardostatus").equals("true"));
-//
-//                dao.update(eduardo);
-//                request.setAttribute("alert", "Usuário atualizado com sucesso.");
-//            } catch (DatabaseException ex) {
-//                request.setAttribute("alert", "Erro ao atualizar usuário.");
-//                Logger.getLogger(EduardoController.class.getName()).log(Level.SEVERE, null, ex);
-//            }
-//        }
-//        RequestDispatcher view = request.getRequestDispatcher(LIST);
-//        try {
-//            request.setAttribute("eduardos", dao.getAll());
-//        } catch (DatabaseException ex) {
-//            Logger.getLogger(EduardoController.class.getName()).log(Level.SEVERE, null, ex);
-//        }
-//        view.forward(request, response);
+        if (action.equals("insert")) {
+            Cliente cliente = new Cliente();
+
+            System.out.println(request.getParameter("idf"));
+            System.out.println(request.getParameter("tipo"));
+
+            cliente.setIdf(
+                    Long.parseLong(
+                            request.getParameter("idf")
+                                    .replaceAll("\\.", "").replaceAll("-", "").replaceAll("/", ""))
+            );
+            cliente.setTipo(request.getParameter("tipo").charAt(0));
+            cliente.setNome(request.getParameter("nome"));
+            cliente.setEndereco(request.getParameter("endereco"));
+            cliente.setFone(request.getParameter("fone"));
+            cliente.setEmail(request.getParameter("email"));
+            cliente.setDtcadastro(new Date());
+            cliente.setStatus(Boolean.valueOf(request.getParameter("status")));
+
+            try {
+                dao.create(cliente);
+                request.setAttribute("alert", "Usuário cadastrado com sucesso.");
+            } catch (DatabaseException ex) {
+                request.setAttribute("alert", "Erro ao cadastrar cliente.");
+                Logger.getLogger(CadClientes.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } else if (action.equals("update")) {
+            try {
+                Cliente cliente = dao.retrieve(
+                        Long.parseLong(request.getParameter("idf")
+                                .replaceAll("\\.", "").replaceAll("-", "").replaceAll("/", "")),
+                        request.getParameter("tipo").charAt(0));
+
+                cliente.setNome(request.getParameter("nome"));
+                cliente.setEndereco(request.getParameter("endereco"));
+                cliente.setFone(request.getParameter("fone"));
+                cliente.setEmail(request.getParameter("email"));
+                cliente.setStatus(Boolean.valueOf(request.getParameter("status")));
+
+                dao.update(cliente);
+                request.setAttribute("alert", "Cliente atualizado com sucesso.");
+
+            } catch (DatabaseException ex) {
+                request.setAttribute("alert", "Erro ao atualizar cliente.");
+                Logger.getLogger(CadClientes.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        RequestDispatcher view = request.getRequestDispatcher(LIST);
+        try {
+            request.setAttribute("clientes", dao.getAll());
+        } catch (DatabaseException ex) {
+            request.setAttribute("alert", "Erro ao listar clientes");
+            Logger.getLogger(CadClientes.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        view.forward(request, response);
     }
 }

@@ -7,7 +7,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<!DOCTYPE html>
+<!DOCTYPE html5>
 <html lang="pt-BR">
     <head>
         <title>Floricultura - Intranet</title>
@@ -16,8 +16,8 @@
         <link rel="icon" href="favicon.ico" type="image/x-icon"/>
         <link rel="stylesheet" href="css/bootstrap.min.css">
         <link rel="stylesheet" href="css/styles.css">
-        <script src="js/bootstrap.min.js"></script>
         <script src="js/jquery-1.10.2.min.js"></script>
+        <script src="js/bootstrap.min.js"></script>
     </head>
     <body>
         <nav class="navbar navbar-inverse">
@@ -51,9 +51,9 @@
                             || request.getParameter("p").equalsIgnoreCase("home")) {
                 %><%@include file = "home.jsp" %><%
                 } else if (request.getParameter("p").equalsIgnoreCase("listClientes")) {
-                %><%@include file = "listClientes.jsp" %><%
+                %><%@include file = "pages/listClientes.jsp" %><%
                 } else if (request.getParameter("p").equalsIgnoreCase("editClientes")) {
-                %><%@include file = "editClientes.jsp" %><%
+                %><%@include file = "pages/editClientes.jsp" %><%
                     }
                 %>
             </div>
