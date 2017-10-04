@@ -19,16 +19,16 @@
                     <td>
                         <input type="radio" name="tipo" <c:if test = "${cliente.tipo == 'F'.charAt(0)}">checked readonly</c:if> onclick="setFormPF();" value="F"/>Pessoa Física
                         <input type="radio" name="tipo" <c:if test = "${cliente.tipo == 'J'.charAt(0)}">checked readonly</c:if> onclick="setFormPJ();" value="J"/>Pessoa Jurídica
-                    </td>
-                </tr>
-                <tr class="tablerow">
-                    <td>
-                        <label for="idf" id="idflabel">
-                        <c:if test = "${cliente.tipo == 'F'.charAt(0)}">CPF<b>(*)</b>:</c:if>
-                        <c:if test = "${cliente.tipo == 'J'.charAt(0)}">CNPJ<b>(*)</b>:</c:if>
-                    </label></td>
-                    <td>
-                        <input name="idf" type="text" id="idf" readonly required onblur="idfBlur();" value="${cliente.idf_formatado}">
+                        </td>
+                    </tr>
+                    <tr class="tablerow">
+                        <td>
+                            <label for="idf" id="idflabel">
+                            <c:if test = "${cliente.tipo == 'F'.charAt(0)}">CPF<b>(*)</b>:</c:if>
+                            <c:if test = "${cliente.tipo == 'J'.charAt(0)}">CNPJ<b>(*)</b>:</c:if>
+                            </label></td>
+                        <td>
+                            <input name="idf" type="text" id="idf" readonly required onblur="idfBlur();" value="${cliente.idf_formatado}">
                         <label id="verifidf"></label>
                     </td>
                 </tr>
@@ -68,3 +68,6 @@
 </div>
 <div class="col-sm-2 sidenav">
 </div>
+<script type="text/javascript">
+    $(document).ready(maskCadClientes());
+</script>

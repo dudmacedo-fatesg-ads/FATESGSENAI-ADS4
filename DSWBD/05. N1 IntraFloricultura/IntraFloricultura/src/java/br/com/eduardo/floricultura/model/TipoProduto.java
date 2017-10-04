@@ -7,7 +7,8 @@ package br.com.eduardo.floricultura.model;
 public enum TipoProduto {
     MUDA(1, "Muda"),
     BUQUE(2, "Buquê"),
-    VASO(3, "Vaso");
+    VASO(3, "Vaso"),
+    SEMENTE(4, "Semente");
 
     private final int id;
     private final String descricao;

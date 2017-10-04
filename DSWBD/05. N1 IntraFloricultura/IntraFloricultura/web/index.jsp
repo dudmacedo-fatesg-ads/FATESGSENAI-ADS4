@@ -10,7 +10,7 @@
 <!DOCTYPE html5>
 <html lang="pt-BR">
     <head>
-        <title>Floricultura - Intranet</title>
+        <title>Floricultura Campo Verde - Intranet</title>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="icon" href="favicon.ico" type="image/x-icon"/>
@@ -23,7 +23,7 @@
         <nav class="navbar navbar-inverse">
             <div class="container-fluid">
                 <div class="navbar-header">
-                    <a class="navbar-brand" href="index.jsp"><i>Floricultura - Intranet</i></a>
+                    <a class="navbar-brand" href="index.jsp"><i>Floricultura Campo Verde</i></a>
                 </div>
                 <div class="collapse navbar-collapse" id="myNavbar">
                     <ul class="nav navbar-nav">
@@ -32,6 +32,12 @@
                                                 </li>-->
                         <li>
                             <a href="cadClientes">Clientes</a>
+                        </li>
+                        <li>
+                            <a href="cadFornecedores">Fornecedores</a>
+                        </li>
+                        <li>
+                            <a href="cadProdutos">Produtos</a>
                         </li>
                         <!--                        <li>
                                                     <a href="index.jsp?p=cadProdutos">Produtos</a>
@@ -54,13 +60,21 @@
                 %><%@include file = "pages/listClientes.jsp" %><%
                 } else if (request.getParameter("p").equalsIgnoreCase("editClientes")) {
                 %><%@include file = "pages/editClientes.jsp" %><%
+                } else if (request.getParameter("p").equalsIgnoreCase("listFornecedores")) {
+                %><%@include file = "pages/listFornecedores.jsp" %><%
+                } else if (request.getParameter("p").equalsIgnoreCase("editFornecedores")) {
+                %><%@include file = "pages/editFornecedores.jsp" %><%
+                } else if (request.getParameter("p").equalsIgnoreCase("listProdutos")) {
+                %><%@include file = "pages/listProdutos.jsp" %><%
+                } else if (request.getParameter("p").equalsIgnoreCase("editProdutos")) {
+                %><%@include file = "pages/editProdutos.jsp" %><%
                     }
                 %>
             </div>
         </div>
 
         <footer class="container-fluid text-center">
-            <p>© Floricultura</p>
+            <p>© Floricultura Campo Verde</p>
         </footer>
 
         <script type="text/javascript">

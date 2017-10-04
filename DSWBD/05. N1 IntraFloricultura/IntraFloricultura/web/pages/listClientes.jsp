@@ -38,7 +38,7 @@
                 </td>
                 <td>
                     <a href="cadClientes?action=edit&idf=<c:out value="${cliente.idf}&tipo=${cliente.tipo}" />">Editar</a>
-                    <a href="cadClientes?action=delete&idf=<c:out value='${cliente.idf}&tipo=${cliente.tipo}' />">Excluir</a>
+                    <a href="cadClientes?action=delete&idf=<c:out value="${cliente.idf}&tipo=${cliente.tipo}" />" onclick="return confirm('Você tem certeza que deseja excluir o cliente?');">Excluir</a>
                 </td>
             </tr>
         </c:forEach>

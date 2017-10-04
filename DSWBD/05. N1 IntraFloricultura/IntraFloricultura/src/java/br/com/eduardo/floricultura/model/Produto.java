@@ -1,5 +1,6 @@
 package br.com.eduardo.floricultura.model;
 
+import java.text.NumberFormat;
 import java.util.Date;
 
 /**
@@ -13,6 +14,7 @@ public class Produto {
     private TipoProduto tipo;
     private String descricao;
     private Date dtcadastro;
+    private String unidade;
     private double quantidade;
     private double valor;
     private boolean status;
@@ -57,6 +59,14 @@ public class Produto {
         this.dtcadastro = dtcadastro;
     }
 
+    public String getUnidade() {
+        return unidade;
+    }
+
+    public void setUnidade(String unidade) {
+        this.unidade = unidade;
+    }
+
     public double getQuantidade() {
         return quantidade;
     }
@@ -69,16 +79,19 @@ public class Produto {
         return valor;
     }
 
+    public String getValor_formatado() {
+        return NumberFormat.getCurrencyInstance().format(valor);
+    }
+
     public void setValor(double valor) {
         this.valor = valor;
     }
 
-    public boolean isStatus() {
+    public boolean getStatus() {
         return status;
     }
 
     public void setStatus(boolean status) {
         this.status = status;
     }
-
 }

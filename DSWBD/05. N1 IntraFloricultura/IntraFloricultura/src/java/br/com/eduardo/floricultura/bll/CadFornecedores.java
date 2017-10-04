@@ -1,7 +1,7 @@
 package br.com.eduardo.floricultura.bll;
 
-import br.com.eduardo.floricultura.dal.ClienteDAO;
-import br.com.eduardo.floricultura.model.Cliente;
+import br.com.eduardo.floricultura.dal.FornecedorDAO;
+import br.com.eduardo.floricultura.model.Fornecedor;
 import br.com.eduardo.floricultura.util.DatabaseException;
 import java.io.IOException;
 import java.util.Date;
@@ -18,16 +18,16 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author eduardo
  */
-@WebServlet(name = "cadClientes", urlPatterns = {"/cadClientes"})
-public class CadClientes extends HttpServlet {
+@WebServlet(name = "cadFornecedores", urlPatterns = {"/cadFornecedores"})
+public class CadFornecedores extends HttpServlet {
 
-    private static final String INSERT_OR_EDIT = "?p=editClientes";
-    private static final String LIST = "?p=listClientes";
-    private final ClienteDAO dao;
+    private static final String INSERT_OR_EDIT = "?p=editFornecedores";
+    private static final String LIST = "?p=listFornecedores";
+    private final FornecedorDAO dao;
 
-    public CadClientes() {
+    public CadFornecedores() {
         super();
-        dao = new ClienteDAO();
+        dao = new FornecedorDAO();
     }
 
     /**
@@ -48,44 +48,44 @@ public class CadClientes extends HttpServlet {
         if (action == null || action.equalsIgnoreCase("list")) {
             forward = LIST;
             try {
-                request.setAttribute("clientes", dao.getAll());
+                request.setAttribute("fornecedores", dao.getAll());
             } catch (DatabaseException ex) {
-                request.setAttribute("alert", "Erro ao listar clientes");
-                Logger.getLogger(CadClientes.class.getName()).log(Level.SEVERE, null, ex);
+                request.setAttribute("alert", "Erro ao listar fornecedores");
+                Logger.getLogger(CadFornecedores.class.getName()).log(Level.SEVERE, null, ex);
             }
         } // Excluir
         else if (action.equals("delete")) {
             long idf = Long.parseLong(request.getParameter("idf"));
             char tipo = request.getParameter("tipo").charAt(0);
-            
-            Cliente cliente = new Cliente();
-            cliente.setIdf(idf);
-            cliente.setTipo(tipo);
+
+            Fornecedor fornecedor = new Fornecedor();
+            fornecedor.setIdf(idf);
+            fornecedor.setTipo(tipo);
             try {
-                dao.delete(cliente);
-                request.setAttribute("alert", "Cliente excluído com sucesso.");
+                dao.delete(fornecedor);
+                request.setAttribute("alert", "Fornecedor excluído com sucesso.");
             } catch (DatabaseException ex) {
-                request.setAttribute("alert", "Erro ao excluir cliente");
-                Logger.getLogger(CadClientes.class.getName()).log(Level.SEVERE, null, ex);
+                request.setAttribute("alert", "Erro ao excluir fornecedor");
+                Logger.getLogger(CadFornecedores.class.getName()).log(Level.SEVERE, null, ex);
             }
-            
+
             forward = LIST;
             try {
-                request.setAttribute("clientes", dao.getAll());
+                request.setAttribute("fornecedores", dao.getAll());
             } catch (DatabaseException ex) {
-                request.setAttribute("alert", "Erro ao listar clientes");
-                Logger.getLogger(CadClientes.class.getName()).log(Level.SEVERE, null, ex);
+                request.setAttribute("alert", "Erro ao listar fornecedores");
+                Logger.getLogger(CadFornecedores.class.getName()).log(Level.SEVERE, null, ex);
             }
         } else if (action.equals("edit")) {
-//            
             forward = INSERT_OR_EDIT;
             long idf = Long.parseLong(request.getParameter("idf"));
             char tipo = request.getParameter("tipo").charAt(0);
             try {
-                Cliente cliente = dao.retrieve(idf, tipo);
-                request.setAttribute("cliente", cliente);
+                Fornecedor fornecedor = dao.retrieve(idf, tipo);
+                request.setAttribute("fornecedor", fornecedor);
                 request.setAttribute("action", "update");
             } catch (DatabaseException ex) {
+                Logger.getLogger(CadFornecedores.class.getName()).log(Level.SEVERE, null, ex);
                 request.setAttribute("alert", "Erro ao buscar dados para edição");
             }
         } else if (action.equals("insert")) {
@@ -113,55 +113,55 @@ public class CadClientes extends HttpServlet {
         String action = request.getParameter("action");
 //
         if (action.equals("insert")) {
-            Cliente cliente = new Cliente();
+            Fornecedor fornecedor = new Fornecedor();
 
-            cliente.setIdf(
+            fornecedor.setIdf(
                     Long.parseLong(
                             request.getParameter("idf")
                                     .replaceAll("\\.", "").replaceAll("-", "").replaceAll("/", ""))
             );
-            cliente.setTipo(request.getParameter("tipo").charAt(0));
-            cliente.setNome(request.getParameter("nome"));
-            cliente.setEndereco(request.getParameter("endereco"));
-            cliente.setFone(request.getParameter("fone"));
-            cliente.setEmail(request.getParameter("email"));
-            cliente.setDtcadastro(new Date());
-            cliente.setStatus(Boolean.valueOf(request.getParameter("status")));
+            fornecedor.setTipo(request.getParameter("tipo").charAt(0));
+            fornecedor.setNome(request.getParameter("nome"));
+            fornecedor.setEndereco(request.getParameter("endereco"));
+            fornecedor.setFone(request.getParameter("fone"));
+            fornecedor.setEmail(request.getParameter("email"));
+            fornecedor.setDtcadastro(new Date());
+            fornecedor.setStatus(Boolean.valueOf(request.getParameter("status")));
 
             try {
-                dao.create(cliente);
-                request.setAttribute("alert", "Usuário cadastrado com sucesso.");
+                dao.create(fornecedor);
+                request.setAttribute("alert", "Fornecedor cadastrado com sucesso.");
             } catch (DatabaseException ex) {
-                request.setAttribute("alert", "Erro ao cadastrar cliente.");
-                Logger.getLogger(CadClientes.class.getName()).log(Level.SEVERE, null, ex);
+                request.setAttribute("alert", "Erro ao cadastrar fornecedor.");
+                Logger.getLogger(CadFornecedores.class.getName()).log(Level.SEVERE, null, ex);
             }
         } else if (action.equals("update")) {
             try {
-                Cliente cliente = dao.retrieve(
+                Fornecedor fornecedor = dao.retrieve(
                         Long.parseLong(request.getParameter("idf")
                                 .replaceAll("\\.", "").replaceAll("-", "").replaceAll("/", "")),
                         request.getParameter("tipo").charAt(0));
 
-                cliente.setNome(request.getParameter("nome"));
-                cliente.setEndereco(request.getParameter("endereco"));
-                cliente.setFone(request.getParameter("fone"));
-                cliente.setEmail(request.getParameter("email"));
-                cliente.setStatus(Boolean.valueOf(request.getParameter("status")));
+                fornecedor.setNome(request.getParameter("nome"));
+                fornecedor.setEndereco(request.getParameter("endereco"));
+                fornecedor.setFone(request.getParameter("fone"));
+                fornecedor.setEmail(request.getParameter("email"));
+                fornecedor.setStatus(Boolean.valueOf(request.getParameter("status")));
 
-                dao.update(cliente);
-                request.setAttribute("alert", "Cliente atualizado com sucesso.");
+                dao.update(fornecedor);
+                request.setAttribute("alert", "Fornecedor atualizado com sucesso.");
 
             } catch (DatabaseException ex) {
-                request.setAttribute("alert", "Erro ao atualizar cliente.");
-                Logger.getLogger(CadClientes.class.getName()).log(Level.SEVERE, null, ex);
+                request.setAttribute("alert", "Erro ao atualizar fornecedor.");
+                Logger.getLogger(CadFornecedores.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
         RequestDispatcher view = request.getRequestDispatcher(LIST);
         try {
-            request.setAttribute("clientes", dao.getAll());
+            request.setAttribute("fornecedores", dao.getAll());
         } catch (DatabaseException ex) {
-            request.setAttribute("alert", "Erro ao listar clientes");
-            Logger.getLogger(CadClientes.class.getName()).log(Level.SEVERE, null, ex);
+            request.setAttribute("alert", "Erro ao listar fornecedores");
+            Logger.getLogger(CadFornecedores.class.getName()).log(Level.SEVERE, null, ex);
         }
         view.forward(request, response);
     }

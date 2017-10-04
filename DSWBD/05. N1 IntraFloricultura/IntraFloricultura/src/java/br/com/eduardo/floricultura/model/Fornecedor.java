@@ -40,6 +40,17 @@ public class Fornecedor {
         this.idf = idf;
     }
 
+    public String getTiponome() {
+        switch (tipo) {
+            case 'F':
+                return "Pessoa Física";
+            case 'J':
+                return "Pessoa Jurídica";
+            default:
+                return "";
+        }
+    }
+
     public char getTipo() {
         return tipo;
     }
@@ -88,7 +99,7 @@ public class Fornecedor {
         this.dtcadastro = dtcadastro;
     }
 
-    public boolean isStatus() {
+    public boolean getStatus() {
         return status;
     }
 

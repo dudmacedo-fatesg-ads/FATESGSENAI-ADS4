@@ -1,4 +1,4 @@
-$(document).ready(function () {
+function maskCadClientes() {
     $('#fone').focusout(function () {
         var phone, element;
         element = $(this);
@@ -10,20 +10,59 @@ $(document).ready(function () {
             element.mask("(99) 9999-9999?9");
         }
     }).trigger('focusout');
-});
+}
+
+function maskCadFornecedores() {
+    $('#fone').focusout(function () {
+        var phone, element;
+        element = $(this);
+        element.unmask();
+        phone = element.val().replace(/\D/g, '');
+        if (phone.length > 10) {
+            element.mask("(99) 99999-999?9");
+        } else {
+            element.mask("(99) 9999-9999?9");
+        }
+    }).trigger('focusout');
+}
+
+function maskCadProdutos() {
+
+}
+
+function validaCadFornecedor() {
+    // IDF
+    if (!validaIDF($("#idf").val())) {
+        alert("Favor informar um CPF/CNPJ válido.");
+        return false;
+    } else if ($("#nome").val() === "" || $("#endereco").val() === "" || $("#fone").val() === "" ||
+            ($("#statustrue").prop("checked") !== true && $("#statusfalse").prop("checked") !== true)) {
+        alert("Todos os campos marcados com (*) são obrigatórios.");
+        return false;
+    }
+    return true;
+}
 
 function validaCadCliente() {
     // IDF
     if (!validaIDF($("#idf").val())) {
         alert("Favor informar um CPF/CNPJ válido.");
         return false;
-    } else if (
-            ($("#statustrue").prop("checked") !== true && $("#statusfalse").prop("checked") !== true )) {
+    } else if ($("#nome").val() === "" || $("#endereco").val() === "" || $("#fone").val() === "" ||
+            ($("#statustrue").prop("checked") !== true && $("#statusfalse").prop("checked") !== true)) {
         alert("Todos os campos marcados com (*) são obrigatórios.");
         return false;
     }
+    return true;
+}
 
-
+function validaCadProduto() {
+    if ($("#codigo").val() === "" || $("#nome").val() === "" || $("#descricao").val() === "" ||
+            $("#unidade").val() === "" || $("#quantidade").val() === "" || $("#valor").val() === "" ||
+            ($("#statustrue").prop("checked") !== true && $("#statusfalse").prop("checked") !== true)) {
+        alert("Todos os campos marcados com (*) são obrigatórios.");
+        return false;
+    }
     return true;
 }
 

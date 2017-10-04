@@ -1,6 +1,6 @@
 package br.com.eduardo.floricultura.dal;
 
-import br.com.eduardo.floricultura.model.Cliente;
+import br.com.eduardo.floricultura.model.Fornecedor;
 import br.com.eduardo.floricultura.util.DBFactory;
 import br.com.eduardo.floricultura.util.DatabaseException;
 import java.sql.Connection;
@@ -17,17 +17,17 @@ import java.util.logging.Logger;
  *
  * @author eduardo
  */
-public class ClienteDAO implements EntityDAO<Cliente> {
+public class FornecedorDAO implements EntityDAO<Fornecedor> {
 
     private final Connection cnx = DBFactory.getConnection();
 
     @Override
     public String getTabela() {
-        return "cliente";
+        return "fornecedor";
     }
 
     @Override
-    public void create(Cliente obj) throws DatabaseException {
+    public void create(Fornecedor obj) throws DatabaseException {
         String sql = String.format(
                 "INSERT INTO %s (idf, tipo, nome, endereco, fone, email, dtcadastro, status) "
                 + "VALUES(?,?,?,?,?,?,?,?)", getTabela());
@@ -50,7 +50,7 @@ public class ClienteDAO implements EntityDAO<Cliente> {
         }
     }
 
-    public Cliente retrieve(long key, char tipo) throws DatabaseException {
+    public Fornecedor retrieve(long key, char tipo) throws DatabaseException {
         String sql = String.format("SELECT * FROM %s WHERE idf = ? AND tipo = ?", getTabela());
 
         try (PreparedStatement pstmt = cnx.prepareStatement(sql)) {
@@ -60,7 +60,7 @@ public class ClienteDAO implements EntityDAO<Cliente> {
             ResultSet rs = pstmt.executeQuery();
 
             if (rs.next()) {
-                Cliente ret = new Cliente();
+                Fornecedor ret = new Fornecedor();
 
                 ret.setIdf(rs.getLong("idf"));
                 ret.setTipo(rs.getString("tipo").charAt(0));
@@ -81,12 +81,12 @@ public class ClienteDAO implements EntityDAO<Cliente> {
     }
 
     @Override
-    public Cliente retrieve(Object key) throws DatabaseException {
+    public Fornecedor retrieve(Object key) throws DatabaseException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public void update(Cliente obj) throws DatabaseException {
+    public void update(Fornecedor obj) throws DatabaseException {
         String sql = String.format(
                 "UPDATE %s SET "
                 + "(nome, endereco, fone, email, status) = "
@@ -99,7 +99,7 @@ public class ClienteDAO implements EntityDAO<Cliente> {
             pstmt.setString(3, obj.getFone());
             pstmt.setString(4, obj.getEmail());
             pstmt.setBoolean(5, obj.getStatus());
-            
+
             pstmt.setLong(6, obj.getIdf());
             pstmt.setString(7, String.valueOf(obj.getTipo()));
 
@@ -111,13 +111,13 @@ public class ClienteDAO implements EntityDAO<Cliente> {
     }
 
     @Override
-    public void delete(Cliente obj) throws DatabaseException {
+    public void delete(Fornecedor obj) throws DatabaseException {
         String sql = String.format(
                 "DELETE FROM %s "
                 + "WHERE idf = ? AND tipo = ?", getTabela());
 
         try (PreparedStatement pstmt = cnx.prepareStatement(sql)) {
-            
+
             pstmt.setLong(1, obj.getIdf());
             pstmt.setString(2, String.valueOf(obj.getTipo()));
 
@@ -129,15 +129,15 @@ public class ClienteDAO implements EntityDAO<Cliente> {
     }
 
     @Override
-    public List<Cliente> getAll() throws DatabaseException {
+    public List<Fornecedor> getAll() throws DatabaseException {
         String sql = String.format("SELECT * FROM %s", getTabela());
-        List<Cliente> lista = new ArrayList<>();
+        List<Fornecedor> lista = new ArrayList<>();
 
         try (PreparedStatement pstmt = cnx.prepareStatement(sql)) {
             ResultSet rs = pstmt.executeQuery();
 
             while (rs.next()) {
-                Cliente ret = new Cliente();
+                Fornecedor ret = new Fornecedor();
 
                 ret.setIdf(rs.getLong("idf"));
                 ret.setTipo(rs.getString("tipo").charAt(0));
