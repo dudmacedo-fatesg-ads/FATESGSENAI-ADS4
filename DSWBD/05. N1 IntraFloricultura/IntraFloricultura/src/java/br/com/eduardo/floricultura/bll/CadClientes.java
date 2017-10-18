@@ -4,6 +4,7 @@ import br.com.eduardo.floricultura.dal.ClienteDAO;
 import br.com.eduardo.floricultura.model.Cliente;
 import br.com.eduardo.floricultura.util.DatabaseException;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -57,7 +58,7 @@ public class CadClientes extends HttpServlet {
         else if (action.equals("delete")) {
             long idf = Long.parseLong(request.getParameter("idf"));
             char tipo = request.getParameter("tipo").charAt(0);
-            
+
             Cliente cliente = new Cliente();
             cliente.setIdf(idf);
             cliente.setTipo(tipo);
@@ -68,7 +69,7 @@ public class CadClientes extends HttpServlet {
                 request.setAttribute("alert", "Erro ao excluir cliente");
                 Logger.getLogger(CadClientes.class.getName()).log(Level.SEVERE, null, ex);
             }
-            
+
             forward = LIST;
             try {
                 request.setAttribute("clientes", dao.getAll());
@@ -86,12 +87,30 @@ public class CadClientes extends HttpServlet {
                 request.setAttribute("cliente", cliente);
                 request.setAttribute("action", "update");
             } catch (DatabaseException ex) {
+                Logger.getLogger(CadClientes.class.getName()).log(Level.SEVERE, null, ex);
                 request.setAttribute("alert", "Erro ao buscar dados para edição");
             }
         } else if (action.equals("insert")) {
 
             forward = INSERT_OR_EDIT;
             request.setAttribute("action", "insert");
+        } // Consulta IDF Cliente
+        else if (action.equals("checkidf")) {
+            response.setContentType("text/html;charset=UTF-8");
+            try {
+                Cliente cli = dao.retrieve(
+                        Long.parseLong(request.getParameter("idf")),
+                        request.getParameter("tipo").charAt(0));
+                try (PrintWriter out = response.getWriter()) {
+                    out.println(cli.getNome());
+                }
+            } catch (DatabaseException ex) {
+                Logger.getLogger(CadClientes.class.getName()).log(Level.SEVERE, null, ex);
+                try (PrintWriter out = response.getWriter()) {
+                    out.println("Cliente não encontrado");
+                }
+            }
+            return;
         }
 
         RequestDispatcher view = request.getRequestDispatcher(forward);

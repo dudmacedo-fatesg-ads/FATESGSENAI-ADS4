@@ -12,6 +12,7 @@ public class Cliente {
     public static final char PESSOA_JURIDICA = 'J';
     public static final char PESSOA_FISICA = 'F';
 
+    private int codigo;
     private long idf;
     private char tipo;
     private String nome;
@@ -20,6 +21,22 @@ public class Cliente {
     private String email;
     private Date dtcadastro;
     private boolean status;
+
+    public Cliente() {
+
+    }
+
+    public Cliente(int codigo) {
+        this.codigo = codigo;
+    }
+
+    public int getCodigo() {
+        return codigo;
+    }
+
+    public void setCodigo(int codigo) {
+        this.codigo = codigo;
+    }
 
     public String getIdf_formatado() {
         switch (tipo) {

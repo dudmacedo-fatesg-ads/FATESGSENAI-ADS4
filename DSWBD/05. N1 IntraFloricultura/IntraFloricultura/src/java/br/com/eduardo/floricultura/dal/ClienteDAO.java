@@ -50,11 +50,11 @@ public class ClienteDAO implements EntityDAO<Cliente> {
         }
     }
 
-    public Cliente retrieve(long key, char tipo) throws DatabaseException {
+    public Cliente retrieve(long idf, char tipo) throws DatabaseException {
         String sql = String.format("SELECT * FROM %s WHERE idf = ? AND tipo = ?", getTabela());
 
         try (PreparedStatement pstmt = cnx.prepareStatement(sql)) {
-            pstmt.setLong(1, key);
+            pstmt.setLong(1, idf);
             pstmt.setString(2, String.valueOf(tipo));
 
             ResultSet rs = pstmt.executeQuery();
@@ -62,6 +62,7 @@ public class ClienteDAO implements EntityDAO<Cliente> {
             if (rs.next()) {
                 Cliente ret = new Cliente();
 
+                ret.setCodigo(rs.getInt("codigo"));
                 ret.setIdf(rs.getLong("idf"));
                 ret.setTipo(rs.getString("tipo").charAt(0));
                 ret.setNome(rs.getString("nome"));
@@ -82,7 +83,33 @@ public class ClienteDAO implements EntityDAO<Cliente> {
 
     @Override
     public Cliente retrieve(Object key) throws DatabaseException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        String sql = String.format("SELECT * FROM %s WHERE codigo = ?", getTabela());
+
+        try (PreparedStatement pstmt = cnx.prepareStatement(sql)) {
+            pstmt.setInt(1, (int)key);
+
+            ResultSet rs = pstmt.executeQuery();
+
+            if (rs.next()) {
+                Cliente ret = new Cliente();
+
+                ret.setCodigo(rs.getInt("codigo"));
+                ret.setIdf(rs.getLong("idf"));
+                ret.setTipo(rs.getString("tipo").charAt(0));
+                ret.setNome(rs.getString("nome"));
+                ret.setEndereco(rs.getString("endereco"));
+                ret.setFone(rs.getString("fone"));
+                ret.setEmail(rs.getString("email"));
+                ret.setDtcadastro(new Date(rs.getDate("dtcadastro").getTime()));
+                ret.setStatus(rs.getBoolean("status"));
+
+                return ret;
+            } else {
+                throw new DatabaseException(null, "Não existe nenhum registro com a chave informada");
+            }
+        } catch (SQLException ex) {
+            throw new DatabaseException(ex, "Erro ao consultar registro");
+        }
     }
 
     @Override

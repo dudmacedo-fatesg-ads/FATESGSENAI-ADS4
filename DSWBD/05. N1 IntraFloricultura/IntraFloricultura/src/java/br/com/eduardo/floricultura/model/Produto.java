@@ -18,6 +18,14 @@ public class Produto {
     private double quantidade;
     private double valor;
     private boolean status;
+    
+    public Produto() {
+        
+    }
+    
+    public Produto(long codigo) {
+        this.codigo = codigo;
+    }
 
     public long getCodigo() {
         return codigo;

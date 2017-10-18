@@ -31,7 +31,7 @@ function maskCadProdutos() {
 }
 
 function validaCadFornecedor() {
-    // IDF
+// IDF
     if (!validaIDF($("#idf").val())) {
         alert("Favor informar um CPF/CNPJ válido.");
         return false;
@@ -44,7 +44,7 @@ function validaCadFornecedor() {
 }
 
 function validaCadCliente() {
-    // IDF
+// IDF
     if (!validaIDF($("#idf").val())) {
         alert("Favor informar um CPF/CNPJ válido.");
         return false;
@@ -80,9 +80,72 @@ function setFormPF() {
     $("#verifidf").html("");
 }
 
+function removeItemPedido(idItem) {
+    if (confirm('Você tem certeza que deseja excluir o produto?')) {
+        $("#" + idItem).remove();
+        updateTotalPedido();
+    }
+    return false;
+}
+
+function adicionaItemPedido() {
+    count++;
+    newitem = '<tr class="tablerow ' + ((count % 2 !== 0) ? "list-odd" : "") + '" id="item' + count + '">' +
+            '<td><input name="item' + count + '_codigo" id="item' + count + '_codigo" onblur="itemPedidoCodigoBlur(' + count + ');" type="number" placeholder="Código do Produto"></td>' +
+            '<td id="item' + count + '_nome"></td>' +
+            '<td id="item' + count + '_unidade"></td>' +
+            '<td><input name="item' + count + '_quantidade" id="item' + count + '_quantidade" type="number" step="0.01" value="0" onblur="updateTotalPedido();"></td>' +
+            '<td><input name="item' + count + '_valor" id="item' + count + '_valor" type="number" step="0.01" readonly value="0"></td>' +
+            '<td><input id="item' + count + '_valortotal" type="number" step="0.01" readonly value="0"></td>' +
+            '<td><input type="button" alt="Excluir" onclick="return removeItemPedido(\'item' + count + '\');" value="  -  "/></td>' +
+            '</tr>';
+    $("#itens").append(newitem);
+}
+
+function updateTotalPedido() {
+    total = 0.0;
+    itens = $('#itens').children();
+    for (i = 0; i < itens.length; i++) {
+        valor = $('#' + itens[i].id + '_quantidade').val() * $('#' + itens[i].id + '_valor').val();
+        $('#' + itens[i].id + '_valortotal').val(valor.toFixed(2));
+        total += valor;
+    }
+    $('#totpedido').val(total.toFixed(2));
+}
+
+function itemPedidoCodigoBlur(count) {
+    $.get("cadProdutos", {action: "checkproduto", codigo: $("#item" + count + "_codigo").val()})
+            .done(function (data) {
+                dados = data.split("||");
+                if (dados.length > 1) {
+                    $('#item' + count + '_nome').html(dados[0]);
+                    $('#item' + count + '_unidade').html(dados[1]);
+                    $('#item' + count + '_valor').val(dados[2]);
+                } else {
+                    alert(data);
+                }
+            });
+    updateTotalPedido();
+}
+
+function idfBlurPedido() {
+    var valor = $("#idf").val();
+    if (!(valor === "" || valor.indexOf("_") !== -1)) {
+        var resultado = validaIDF(valor);
+        if (resultado) {
+            valor = valor.split(".").join("").split("-").join("").split("/").join("");
+            $.get("cadClientes", {action: "checkidf", tipo: $("input:radio[name ='tipo']:checked").val(), idf: valor})
+                    .done(function (data) {
+                        $("#verifidf").html(data);
+                    });
+        } else {
+            $("#verifidf").html("<p style=\"font-weight:bold;color:red;\">Inválido</p>");
+        }
+    }
+}
+
 function idfBlur() {
     var valor = $("#idf").val();
-
     if (!(valor === "" || valor.indexOf("_") !== -1)) {
         var resultado = validaIDF(valor);
         if (resultado) {
@@ -95,7 +158,6 @@ function idfBlur() {
 
 function validaIDF(valor) {
     valor = valor.split(".").join("").split("-").join("").split("/").join("");
-
     if (valor === "") {
         return false;
     }
@@ -142,7 +204,6 @@ function validaIDF(valor) {
         for (var i = 0; i < 12; i++) {
             somadv1 += cont1 * valor.charAt(i);
             somadv2 += cont2 * valor.charAt(i);
-
             if (cont1 < 9) {
                 cont1++;
             } else {

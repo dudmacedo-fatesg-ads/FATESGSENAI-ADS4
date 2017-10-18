@@ -5,6 +5,7 @@ import br.com.eduardo.floricultura.model.Produto;
 import br.com.eduardo.floricultura.model.TipoProduto;
 import br.com.eduardo.floricultura.util.DatabaseException;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -87,11 +88,27 @@ public class CadProdutos extends HttpServlet {
             } catch (DatabaseException ex) {
                 request.setAttribute("alert", "Erro ao buscar dados para edição");
             }
-        } else if (action.equals("insert")) {
+        } // Inserir
+        else if (action.equals("insert")) {
 
             forward = INSERT_OR_EDIT;
             request.setAttribute("action", "insert");
             request.setAttribute("tipos", TipoProduto.values());
+        } // Check Produto
+        else if (action.equals("checkproduto")) {
+            response.setContentType("text/html;charset=UTF-8");
+            try {
+                Produto prod = dao.retrieve(Long.parseLong(request.getParameter("codigo")));
+                try (PrintWriter out = response.getWriter()) {
+                    out.println(prod.getNome() + "||" + prod.getUnidade() + "||" + prod.getValor() + "||");
+                }
+            } catch (DatabaseException ex) {
+//                Logger.getLogger(CadProdutos.class.getName()).log(Level.SEVERE, null, ex);
+                try (PrintWriter out = response.getWriter()) {
+                    out.println("Produto não encontrado");
+                }
+            }
+            return;
         }
 
         RequestDispatcher view = request.getRequestDispatcher(forward);

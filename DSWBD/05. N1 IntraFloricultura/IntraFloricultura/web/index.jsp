@@ -13,7 +13,7 @@
         <title>Floricultura Campo Verde - Intranet</title>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="icon" href="favicon.ico" type="image/x-icon"/>
+        <link rel="icon" href="img/flower-xxl.png" type="image/x-icon"/>
         <link rel="stylesheet" href="css/bootstrap.min.css">
         <link rel="stylesheet" href="css/styles.css">
         <script src="js/jquery-1.10.2.min.js"></script>
@@ -38,6 +38,9 @@
                         </li>
                         <li>
                             <a href="cadProdutos">Produtos</a>
+                        </li>
+                        <li>
+                            <a href="cadPedidos">Pedidos</a>
                         </li>
                         <!--                        <li>
                                                     <a href="index.jsp?p=cadProdutos">Produtos</a>
@@ -68,6 +71,10 @@
                 %><%@include file = "pages/listProdutos.jsp" %><%
                 } else if (request.getParameter("p").equalsIgnoreCase("editProdutos")) {
                 %><%@include file = "pages/editProdutos.jsp" %><%
+                } else if (request.getParameter("p").equalsIgnoreCase("listPedidos")) {
+                %><%@include file = "pages/listPedidos.jsp" %><%
+                } else if (request.getParameter("p").equalsIgnoreCase("editPedidos")) {
+                %><%@include file = "pages/editPedidos.jsp" %><%
                     }
                 %>
             </div>
